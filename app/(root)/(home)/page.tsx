@@ -5,39 +5,12 @@ import NoResult from "@/components/shared/NoResult";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filter";
+import { getQuestions } from "@/lib/actions/question.action";
 import Link from "next/link";
 
-const questions = [
-  {
-    _id: "1",
-    title:
-      "In JavaScript, how do you declare a variable using the let keyword, and",
-    tags: [
-      { _id: "1", name: "Javascript" },
-      { _id: "2", name: "sql" },
-    ],
-    author: "Muhsin",
-    upvotes: 10,
-    views: 100,
-    answers: 2,
-    createdAt: "2022-09-01T12:00:00.000Z",
-  },
-  {
-    _id: "2",
-    title: "How to center a div",
-    tags: [
-      { _id: "1", name: "css" },
-      { _id: "2", name: "sql" },
-    ],
-    author: "Muhsin",
-    upvotes: 10,
-    views: 100,
-    answers: 2,
-    createdAt: "2022-09-01T12:00:00.000Z",
-  },
-];
+export default async function Home() {
+  const result = await getQuestions({});
 
-export default function Home() {
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
@@ -69,15 +42,15 @@ export default function Home() {
       </div>
       <HomeFilters />
 
-      {/* <div className="mt-10 flex flex-col gap-6">
-        {questions.length > 0 ? (
-          questions.map((question) => (
+      <div className="mt-10 flex flex-col gap-6">
+        {result.questions.length > 0 ? (
+          result.questions.map((question) => (
             <QuestionCard
               key={question._id}
               _id={question._id}
               title={question.title}
-              questionToTags={question.tags}
-              auther={question.author}
+              tags={question.tags}
+              author={question.author}
               upvotes={question.upvotes}
               views={question.views}
               answers={question.answers}
@@ -92,7 +65,7 @@ export default function Home() {
             linkTitle="Ask a Question"
           />
         )}
-      </div> */}
+      </div>
     </>
   );
 }
